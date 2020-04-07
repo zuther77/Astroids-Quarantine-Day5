@@ -5,7 +5,7 @@
         <style></style>
     </head>
     <body>
-        <canvas id="mainCanvas" style="margin: 0; padding: 0;" width="1800" height="900" ></canvas>
+        <canvas id="mainCanvas" style="margin: 0; padding: 0;" width="900" height="900" ></canvas>
         <script>
             const FPS = 30;
             const SHIP_SIZE = 50;
@@ -27,8 +27,6 @@
             const LIVES = 3;
 
 
-
-
               /** @type {HTMLCanvasElement} */
             var canvas = document.getElementById("mainCanvas");
             var ctx = canvas.getContext("2d");
@@ -45,9 +43,8 @@
             var fxHit = new Audio("sounds/hit.m4a");
             fxExplode.volume = 0.5;
 
-            var fxMusic = new Audio("sounds/music.m4a");
-            fxMusic.autoplay = true;
-            fxMusic.loop = true
+            var fxMusic = new Audio("sounds/music.wav");
+            
            
             // game parameters
             var level, astroids, ship,txt, text_alpha, lives_left , score , highScore =0;
@@ -55,6 +52,10 @@
 
 
             function newGame(){
+                fxMusic.autoplay = true;
+                fxMusic.volume = 0.69;
+                fxMusic.play();
+                fxMusic.loop = true;
                 window.alert("Welcome to Astroids. \nRules : \n1.Avoid astroids \n2.After every 500 point you get a new life ");
                 score  =0;
                 level = 0;
@@ -156,14 +157,14 @@
                     case 32:            //space bar
                         shootLazer();
                         break;
-                    case 37 :           //left arrow
+                    case 68 :           //left arrow
                         ship.rot = ROTATION_SPEED / 180 * Math.PI / FPS;
                         break;
-                    case 38 :           // up arrow
+                    case 87 :           // up arrow
                         ship.thursting = true; 
                         fxThruster.play();       
                         break;
-                    case 39 :           // right arrow
+                    case 65 :           // right arrow
                     ship.rot = -ROTATION_SPEED / 180 * Math.PI / FPS;
                         break;
                 }
@@ -174,14 +175,14 @@
                     case 32:            //space bar
                         ship.canShoot = true;
                         break;
-                    case 37 :           //left arrow
+                    case 68 :           //left arrow
                         ship.rot = 0;
                         break;
-                    case 38 :           // up arrow
+                    case 87 :           // up arrow
                         ship.thursting = false;
                         fxThruster.pause();
                         break;
-                    case 39 :           // right arrow
+                    case 65 :           // right arrow
                     ship.rot = 0;
                         break;
                 }
@@ -203,8 +204,7 @@
                             yv: -LAZER_SPEED * Math.sin(ship.angle) ,
                             dist: 0 ,
                         });  
-                    } 
-                fxLazer.play();     
+                    }    
                 // prevent further shoooting
                 ship.canShoot = false;
             }
@@ -508,13 +508,6 @@
                     }  
             
                 }
-
-                   
-
-
-
-
-
 
                 ctx.closePath();
                 ctx.stroke();
